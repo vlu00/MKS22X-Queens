@@ -10,6 +10,17 @@ public class QueenBoard{
     }
   }
 
+  private boolean addQueen(int row, int col) {
+    board[row][col] = -1;
+    int size = board.length;
+    for (int r = 0; r < size; r++) {
+      for (int c = 0; c < size; c++) {
+        if (r == row) {
+          board[r][c] =  board[r][c] + 1;
+        }
+        if 
+  }
+
   public String toString(){
     String display = "";
     int size = board.length;
