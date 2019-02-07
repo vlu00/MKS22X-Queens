@@ -3,6 +3,11 @@ public class QueenBoard{
 
   public QueenBoard(int size){
     board = new int[size][size];
+    reset();
+  }
+
+  public void reset() {
+    int size = board.length;
     for (int r = 0; r < size; r++) {
       for (int c = 0; c < size; c++) {
         board[r][c] = 0;
@@ -15,7 +20,7 @@ public class QueenBoard{
       int size = board.length;
       int r;
       int c;
-      for (c = 0; c < size; c++) {
+      for (c = col; c < size; c++) {
         board[row][c] = board[row][c] +1;
       }
       for (r = 0; r < size; r++) {
@@ -51,6 +56,10 @@ public class QueenBoard{
     QueenBoard A = new QueenBoard(4);
     System.out.println(A.toString());
     System.out.println(A.addQueen(0,0));
+    System.out.println(A.toString());
+    A.reset();
+    System.out.println(A.toString());
+    System.out.println(A.addQueen(1,2));
     System.out.println(A.toString());
   }
 
