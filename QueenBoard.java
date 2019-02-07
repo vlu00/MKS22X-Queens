@@ -26,7 +26,7 @@ public class QueenBoard{
       for (r = 0; r < size; r++) {
         board[r][col] = board[r][col] +1;
       }
-      for (r = row, c = col; r-1 > -1 && c + 1 < size; r++, c++) {
+      for (r = row, c = col; r-1 > -1 && c + 1 < size; r--, c++) {
         board[r-1][c+1] = board[r-1][c+1] + 1;
       }
       for (r = row, c = col; r+1 < size && c + 1 < size; r++, c++) {
@@ -59,7 +59,11 @@ public class QueenBoard{
     System.out.println(A.toString());
     A.reset();
     System.out.println(A.toString());
-    System.out.println(A.addQueen(1,2));
+    System.out.println(A.addQueen(1,1));
+    System.out.println(A.toString());
+    System.out.println(A.addQueen(3,1));
+    System.out.println(A.toString());
+    System.out.println(A.addQueen(3,2));
     System.out.println(A.toString());
   }
 
