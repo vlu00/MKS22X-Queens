@@ -12,14 +12,22 @@ public class QueenBoard{
 
   private boolean addQueen(int row, int col) {
     if (board[row][col] == 0) {
-      board[row][col] = -1;
       int size = board.length;
-      for (int c = 0; c < size; c++) {
+      int r;
+      int c;
+      for (c = 0; c < size; c++) {
         board[row][c] = board[row][c] +1;
       }
-      for (int r = 0; r < size; r++) {
+      for (r = 0; r < size; r++) {
         board[r][col] = board[r][col] +1;
       }
+      for (r = row, c = col; r-1 > -1 && c + 1 < size; r++, c++) {
+        board[r-1][c+1] = board[r-1][c+1] + 1;
+      }
+      for (r = row, c = col; r+1 < size && c + 1 < size; r++, c++) {
+        board[r+1][c+1] = board[r+1][c+1] + 1;
+      }
+      board[row][col] = -1;
       return true;
     }
     else {
