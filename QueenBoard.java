@@ -41,7 +41,7 @@ public class QueenBoard{
   }
 
   public boolean removeQueen(int row, int col) {
-    int size = board.length; 
+    int size = board.length;
     int r;
     int c;
     for (c = col; c < size; c++) {
@@ -56,7 +56,7 @@ public class QueenBoard{
     for (r = row, c = col; r+1 < size && c + 1 < size; r++, c++) {
       board[r+1][c+1] = board[r+1][c+1] - 1;
     }
-    board[row][col] = 9;
+    board[row][col] = 0;
     return true;
   }
 
