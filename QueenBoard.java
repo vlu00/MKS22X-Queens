@@ -1,13 +1,15 @@
 public class QueenBoard{
   private int[][]board;
+  private int size;  = board.length;
 
   public QueenBoard(int size){
     board = new int[size][size];
+    size = board.length;
     reset();
   }
 
   public void reset() {
-    int size = board.length;
+    //int size = board.length;
     for (int r = 0; r < size; r++) {
       for (int c = 0; c < size; c++) {
         board[r][c] = 0;
@@ -17,7 +19,7 @@ public class QueenBoard{
 
   private boolean addQueen(int row, int col) {
     if (board[row][col] == 0) {
-      int size = board.length;
+      //int size = board.length;
       int r;
       int c;
       for (c = col; c < size; c++) {
@@ -41,7 +43,7 @@ public class QueenBoard{
   }
 
   public boolean removeQueen(int row, int col) {
-    int size = board.length;
+    //int size = board.length;
     int r;
     int c;
     for (c = col; c < size; c++) {
@@ -59,6 +61,47 @@ public class QueenBoard{
     board[row][col] = 0;
     return true;
   }
+
+  public boolean isException() { //if there is any non zeros on board
+    //int size = board.length;
+    for (int r = 0; r < size; r++) {
+      for (int c = 0; c < size; c++) {
+        if (board[r][c] != 0) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  public boolean notSolution() { //checks if a column is elminated.
+    //int size = board.length;
+    for (int r = 0; r < size; r++) {
+      for (int c = 0; c < size; c++) {
+        if (board[r][c] == 0) { //if column is not eliminated
+          return false;
+        }
+      }
+    }
+    return true; //column is eliminated
+  }
+
+  public boolean solve() {
+    if (isException()) {
+      throw new IllegalStateException();
+    }
+    if ()
+    else {
+      for (int r = 0; i < board.length; i++) {
+        addQueen()
+      }
+    }
+
+  }
+
+
+
+
 
   public String toString(){
     String display = "";
