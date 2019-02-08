@@ -32,12 +32,32 @@ public class QueenBoard{
       for (r = row, c = col; r+1 < size && c + 1 < size; r++, c++) {
         board[r+1][c+1] = board[r+1][c+1] + 1;
       }
-      board[row][col] = -1;
+      board[row][col] = 9;
       return true;
     }
     else {
       return false;
     }
+  }
+
+  public boolean removeQueen(int row, int col) {
+    int size = board.length; 
+    int r;
+    int c;
+    for (c = col; c < size; c++) {
+      board[row][c] = board[row][c] -1;
+    }
+    for (r = 0; r < size; r++) {
+      board[r][col] = board[r][col] -1;
+    }
+    for (r = row, c = col; r-1 > -1 && c + 1 < size; r--, c++) {
+      board[r-1][c+1] = board[r-1][c+1] - 1;
+    }
+    for (r = row, c = col; r+1 < size && c + 1 < size; r++, c++) {
+      board[r+1][c+1] = board[r+1][c+1] - 1;
+    }
+    board[row][col] = 9;
+    return true;
   }
 
   public String toString(){
@@ -64,6 +84,8 @@ public class QueenBoard{
     System.out.println(A.addQueen(3,1));
     System.out.println(A.toString());
     System.out.println(A.addQueen(3,2));
+    System.out.println(A.toString());
+    System.out.println(A.removeQueen(3,2));
     System.out.println(A.toString());
   }
 
