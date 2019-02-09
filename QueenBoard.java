@@ -1,6 +1,6 @@
 public class QueenBoard{
   private int[][]board;
-  public int size;  //= board.length;
+  private int size;
 
   public QueenBoard(int length){
     board = new int[length][length];
@@ -9,7 +9,6 @@ public class QueenBoard{
   }
 
   public void reset() {
-    //int size = board.length;
     for (int r = 0; r < size; r++) {
       for (int c = 0; c < size; c++) {
         board[r][c] = 0;
@@ -48,6 +47,29 @@ public class QueenBoard{
       board[r][c+i] = board[r][c+i] - 1;
     }
     return true;
+  }
+
+  public boolean solve() {
+    return solveHelper(0); //start with column 0
+  }
+
+  public boolean solveHelper(int col) {
+    if (col > size-1) { //if you are at the last column n queens have been placed
+      return true;
+    }
+    else {
+      for (int r = 0; r < size; r++) { //go down the column
+        if (addQueen(r, col)) { //if you can add a queen
+          if (solveHelper(col+1)) { //see if you can add queen to next column
+            return true;
+          }
+          else { //cannot add queen to next column
+            removeQueen(r,col);
+          }
+        }
+      }
+      return false;
+    }
   }
 
 /*
@@ -101,7 +123,11 @@ public class QueenBoard{
   }
 
   public static void main(String[] args) {
+    QueenBoard B = new QueenBoard(1);
+    QueenBoard C = new QueenBoard(2);
+    QueenBoard D = new QueenBoard(3);
     QueenBoard A = new QueenBoard(4);
+    /*
     System.out.println(A.toString());
     System.out.println("adding to 0,0");
     System.out.println(A.addQueen(0,0));
@@ -118,5 +144,10 @@ public class QueenBoard{
     System.out.println("removing to 3,1");
     System.out.println(A.removeQueen(3,1));
     System.out.println(A.toString());
+    */
+    System.out.println("testing solve");
+    System.out.println(A.solve());
+    System.out.println(A.toString());
+
   }
 }
