@@ -1,10 +1,10 @@
 public class QueenBoard{
   private int[][]board;
-  private int size;  = board.length;
+  public int size;  //= board.length;
 
-  public QueenBoard(int size){
-    board = new int[size][size];
-    size = board.length;
+  public QueenBoard(int length){
+    board = new int[length][length];
+    size = length;
     reset();
   }
 
@@ -17,24 +17,18 @@ public class QueenBoard{
     }
   }
 
-  private boolean addQueen(int row, int col) {
-    if (board[row][col] == 0) {
-      //int size = board.length;
-      int r;
-      int c;
-      for (c = col; c < size; c++) {
-        board[row][c] = board[row][c] +1;
+  public boolean addQueen(int r, int c) {
+    if (board[r][c] == 0) {
+      board[r][c] = 9;
+      for (int i = 1; c + i < size; i++) {
+        if (r + i < size) {
+          board[r+i][c+i] = board[r+i][c+i] + 1;
+        }
+        if (r-i > -1) {
+          board[r-i][c+i] = board[r-i][c+i] + 1;
+        }
+        board[r][c+i] = board[r][c+i] + 1;
       }
-      for (r = 0; r < size; r++) {
-        board[r][col] = board[r][col] +1;
-      }
-      for (r = row, c = col; r-1 > -1 && c + 1 < size; r--, c++) {
-        board[r-1][c+1] = board[r-1][c+1] + 1;
-      }
-      for (r = row, c = col; r+1 < size && c + 1 < size; r++, c++) {
-        board[r+1][c+1] = board[r+1][c+1] + 1;
-      }
-      board[row][col] = 9;
       return true;
     }
     else {
@@ -42,26 +36,21 @@ public class QueenBoard{
     }
   }
 
-  public boolean removeQueen(int row, int col) {
-    //int size = board.length;
-    int r;
-    int c;
-    for (c = col; c < size; c++) {
-      board[row][c] = board[row][c] -1;
+  public boolean removeQueen(int r, int c) {
+    board[r][c] = 0;
+    for (int i = 1; c + i < size; i++) {
+      if (r + i < size) {
+        board[r+i][c+i] = board[r+i][c+i] - 1;
+      }
+      if (r-i > -1) {
+        board[r-i][c+i] = board[r-i][c+i] - 1;
+      }
+      board[r][c+i] = board[r][c+i] - 1;
     }
-    for (r = 0; r < size; r++) {
-      board[r][col] = board[r][col] -1;
-    }
-    for (r = row, c = col; r-1 > -1 && c + 1 < size; r--, c++) {
-      board[r-1][c+1] = board[r-1][c+1] - 1;
-    }
-    for (r = row, c = col; r+1 < size && c + 1 < size; r++, c++) {
-      board[r+1][c+1] = board[r+1][c+1] - 1;
-    }
-    board[row][col] = 0;
     return true;
   }
 
+/*
   public boolean isException() { //if there is any non zeros on board
     //int size = board.length;
     for (int r = 0; r < size; r++) {
@@ -98,11 +87,7 @@ public class QueenBoard{
     }
 
   }
-
-
-
-
-
+*/
   public String toString(){
     String display = "";
     int size = board.length;
@@ -118,20 +103,20 @@ public class QueenBoard{
   public static void main(String[] args) {
     QueenBoard A = new QueenBoard(4);
     System.out.println(A.toString());
+    System.out.println("adding to 0,0");
     System.out.println(A.addQueen(0,0));
     System.out.println(A.toString());
-    A.reset();
-    System.out.println(A.toString());
+    System.out.println("adding to 1,1");
     System.out.println(A.addQueen(1,1));
     System.out.println(A.toString());
+    System.out.println("adding to 3,1");
     System.out.println(A.addQueen(3,1));
     System.out.println(A.toString());
+    System.out.println("adding to 3,2");
     System.out.println(A.addQueen(3,2));
     System.out.println(A.toString());
-    System.out.println(A.removeQueen(3,2));
+    System.out.println("removing to 3,1");
+    System.out.println(A.removeQueen(3,1));
     System.out.println(A.toString());
   }
-
-  //private boolean addQueen(int r, int c)
-  //private boolean removeQueen(int r, int c)
 }
