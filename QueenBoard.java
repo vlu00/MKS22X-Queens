@@ -88,34 +88,28 @@ public class QueenBoard{
     }
   }
 
-/*
+  public int countSolutions() {
+    return countHelper(0, 0);
+  }
 
-
-  public boolean notSolution() { //checks if a column is elminated.
-    //int size = board.length;
-    for (int r = 0; r < size; r++) {
-      for (int c = 0; c < size; c++) {
-        if (board[r][c] == 0) { //if column is not eliminated
-          return false;
+  public int countHelper(int solution, int col) {
+    for (int r = 0; r < size; r++) { //go down the column
+      if (col > size-1) {
+        solution = solution + 1;
+        countHelper(solution, 0); 
+      }
+      else if (addQueen(r, col)) { //if you can add a queen
+        if (countHelper(solution, col+1) != solution+1) { //see if you can add queen to next column
+          removeQueen(r,col);
+        }
+        else { //cannot add queen to next column
+          countHelper(solution, col+1);
         }
       }
     }
-    return true; //column is eliminated
+    return solution;
   }
 
-  public boolean solve() {
-    if (isException()) {
-      throw new IllegalStateException();
-    }
-    if ()
-    else {
-      for (int r = 0; i < board.length; i++) {
-        addQueen()
-      }
-    }
-
-  }
-*/
   public String toString(){
     String display = "";
     int size = board.length;
@@ -133,6 +127,10 @@ public class QueenBoard{
     QueenBoard C = new QueenBoard(2);
     QueenBoard D = new QueenBoard(3);
     QueenBoard A = new QueenBoard(4);
+    System.out.println(A.countSolutions());
+    System.out.println(A.toString());
+
+    /*
     System.out.println("testing solve 1");
     System.out.println(B.solve());
     System.out.println(B.toString());
@@ -146,7 +144,6 @@ public class QueenBoard{
     System.out.println(A.solve());
     System.out.println(A.toString());
 
-    /*
     System.out.println(A.toString());
     System.out.println("adding to 0,0");
     System.out.println(A.addQueen(0,0));
