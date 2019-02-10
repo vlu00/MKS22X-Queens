@@ -92,18 +92,29 @@ public class QueenBoard{
     return countHelper(0, 0);
   }
 
+  public boolean canMove(int col) {
+    for (int r = 0; r < size; r++) {
+      if (board[r][col] == 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public int countHelper(int solution, int col) {
     for (int r = 0; r < size; r++) { //go down the column
       if (col > size-1) {
         solution = solution + 1;
-        countHelper(solution, 0); 
+        removeQueen(r, col-1);
       }
-      else if (addQueen(r, col)) { //if you can add a queen
-        if (countHelper(solution, col+1) != solution+1) { //see if you can add queen to next column
-          removeQueen(r,col);
-        }
-        else { //cannot add queen to next column
-          countHelper(solution, col+1);
+      else {
+        if (addQueen(r, col)) {
+          if (canMove(col+1)) {
+            countHelper(solution, col+1);
+          }
+          else {
+            removeQueen(r, col);
+          }
         }
       }
     }
