@@ -62,11 +62,11 @@ public class QueenBoard{
     for (int r = 0; r < size; r++) {
       for (int c = 0; c < size; c++) {
         if (board[r][c] != 0) {
-          return false;
+          return true;
         }
       }
     }
-    return true;
+    return false;
   }
 
   public boolean solveHelper(int col) {
@@ -102,22 +102,22 @@ public class QueenBoard{
   }
 
   public int countHelper(int solution, int col) {
-    for (int r = 0; r < size; r++) { //go down the column
-      if (col > size-1) {
-        solution = solution + 1;
-        removeQueen(r, col-1);
-      }
-      else {
-        if (addQueen(r, col)) {
-          if (canMove(col+1)) {
-            countHelper(solution, col+1);
-          }
-          else {
-            removeQueen(r, col);
+      for (int r = 0; r < size; r++) { //go down the column
+        if (col > size-1) {
+          solution = solution + 1;
+          removeQueen(r, col-1);
+        }
+        else {
+          if (addQueen(r, col)) {
+            if (canMove(col+1)) {
+              countHelper(solution, col+1);
+            }
+            else {
+              removeQueen(r, col);
+            }
           }
         }
       }
-    }
     return solution;
   }
 
@@ -138,8 +138,8 @@ public class QueenBoard{
     QueenBoard C = new QueenBoard(2);
     QueenBoard D = new QueenBoard(3);
     QueenBoard A = new QueenBoard(4);
-    System.out.println(A.countSolutions());
-    System.out.println(A.toString());
+    System.out.println(C.solve());
+    System.out.println(C.toString());
 
     /*
     System.out.println("testing solve 1");
