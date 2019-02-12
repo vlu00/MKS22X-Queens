@@ -18,7 +18,7 @@ public class QueenBoard{
 
   public boolean addQueen(int r, int c) {
     if (board[r][c] == 0) {
-      board[r][c] = 9;
+      board[r][c] = -1;
       for (int i = 1; c + i < size; i++) {
         if (r + i < size) {
           board[r+i][c+i] = board[r+i][c+i] + 1;
@@ -89,44 +89,33 @@ public class QueenBoard{
   }
 
   public int countSolutions() {
-    return countHelper(0, 0);
+    return countHelper(0);
   }
 
-  public boolean canMove(int col) {
+  public int countHelper(int col) {
+    if (col > size-1) {
+      return 1;
+    }
+    int solutions = 0;
     for (int r = 0; r < size; r++) {
-      if (board[r][col] == 0) {
-        return true;
+      if (addQueen(r, col)) {
+        solutions = solutions + countHelper(col+1);
+        removeQueen(r, col);
       }
     }
-    return false;
-  }
-
-  public int countHelper(int solution, int col) {
-      for (int r = 0; r < size; r++) { //go down the column
-        if (col > size-1) {
-          solution = solution + 1;
-          removeQueen(r, col-1);
-        }
-        else {
-          if (addQueen(r, col)) {
-            if (canMove(col+1)) {
-              countHelper(solution, col+1);
-            }
-            else {
-              removeQueen(r, col);
-            }
-          }
-        }
-      }
-    return solution;
+    return solutions;
   }
 
   public String toString(){
-    String display = "";
-    int size = board.length;
+    String display = "";;
     for (int r = 0; r < size; r++) {
       for (int c = 0; c < size; c++) {
-        display += board[r][c];
+        if (board[r][c] == -1) {
+          display += "Q ";
+        }
+        else {
+          display += "_ ";
+        }
       }
       display += "\n";
     }
@@ -134,45 +123,15 @@ public class QueenBoard{
   }
 
   public static void main(String[] args) {
-    QueenBoard B = new QueenBoard(1);
-    QueenBoard C = new QueenBoard(2);
-    QueenBoard D = new QueenBoard(3);
     QueenBoard A = new QueenBoard(4);
-    System.out.println(C.solve());
-    System.out.println(C.toString());
-
-    /*
-    System.out.println("testing solve 1");
-    System.out.println(B.solve());
-    System.out.println(B.toString());
-    System.out.println("testing solve 2");
-    System.out.println(C.solve());
-    System.out.println(C.toString());
-    System.out.println("testing solve 3");
-    System.out.println(D.solve());
-    System.out.println(D.toString());
-    System.out.println("testing solve 4");
-    System.out.println(A.solve());
-    System.out.println(A.toString());
-
-    System.out.println(A.toString());
-    System.out.println("adding to 0,0");
-    System.out.println(A.addQueen(0,0));
-    System.out.println(A.toString());
-    System.out.println("adding to 1,1");
-    System.out.println(A.addQueen(1,1));
-    System.out.println(A.toString());
-    System.out.println("adding to 3,1");
-    System.out.println(A.addQueen(3,1));
-    System.out.println(A.toString());
-    System.out.println("adding to 3,2");
-    System.out.println(A.addQueen(3,2));
-    System.out.println(A.toString());
-    System.out.println("removing to 3,1");
-    System.out.println(A.removeQueen(3,1));
-    System.out.println(A.toString());
-    */
-
-
+    QueenBoard B = new QueenBoard(5);
+    QueenBoard C = new QueenBoard(6);
+    QueenBoard D = new QueenBoard(7);
+    QueenBoard E = new QueenBoard(8);
+    System.out.println(A.countSolutions());
+    System.out.println(B.countSolutions());
+    System.out.println(C.countSolutions());
+    System.out.println(D.countSolutions());
+    System.out.println(E.countSolutions());
   }
 }
