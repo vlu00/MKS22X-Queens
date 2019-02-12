@@ -8,7 +8,7 @@ public class QueenBoard{
     reset();
   }
 
-  public void reset() {
+  public void reset() { //board is blank
     for (int r = 0; r < size; r++) {
       for (int c = 0; c < size; c++) {
         board[r][c] = 0;
@@ -17,27 +17,27 @@ public class QueenBoard{
   }
 
   public boolean addQueen(int r, int c) {
-    if (board[r][c] == 0) {
-      board[r][c] = -1;
+    if (board[r][c] == 0) { //if square is not eliminated
+      board[r][c] = -1; //place a queen
       for (int i = 1; c + i < size; i++) {
-        if (r + i < size) {
-          board[r+i][c+i] = board[r+i][c+i] + 1;
+        if (r + i < size) { //haven't reached first row
+          board[r+i][c+i] = board[r+i][c+i] + 1; //eliminate diagonal to top right corner
         }
-        if (r-i > -1) {
-          board[r-i][c+i] = board[r-i][c+i] + 1;
+        if (r-i > -1) { //haven't reached last row
+          board[r-i][c+i] = board[r-i][c+i] + 1; //eliminate diagonal to bottom right corner
         }
-        board[r][c+i] = board[r][c+i] + 1;
+        board[r][c+i] = board[r][c+i] + 1; //eliminate squares in same row
       }
       return true;
     }
     else {
-      return false;
+      return false; //can't add queen
     }
   }
 
   public boolean removeQueen(int r, int c) {
-    board[r][c] = 0;
-    for (int i = 1; c + i < size; i++) {
+    board[r][c] = 0; //change back to blank space
+    for (int i = 1; c + i < size; i++) { //get rid of the eliminated squares associated with the queen
       if (r + i < size) {
         board[r+i][c+i] = board[r+i][c+i] - 1;
       }
@@ -50,11 +50,11 @@ public class QueenBoard{
   }
 
   public boolean solve() {
-    if (isException()) {
+    if (isException()) { //if the board is not blank throw an exception
       throw new IllegalStateException();
     }
     else {
-      return solveHelper(0); //start with column 0
+      return solveHelper(0); //else solve starting with column 0
     }
   }
 
@@ -89,18 +89,23 @@ public class QueenBoard{
   }
 
   public int countSolutions() {
-    return countHelper(0);
+    if (isException()) { //if the board is not blank throw an exception
+      throw new IllegalStateException();
+    }
+    else {
+      return countHelper(0); //else find solutions starting with first column
+    }
   }
 
   public int countHelper(int col) {
-    if (col > size-1) {
-      return 1;
+    if (col > size-1) { //if you've reached the last column
+      return 1; //will add one to solutions;
     }
     int solutions = 0;
     for (int r = 0; r < size; r++) {
-      if (addQueen(r, col)) {
-        solutions = solutions + countHelper(col+1);
-        removeQueen(r, col);
+      if (addQueen(r, col)) { //if you can add a queen
+        solutions = solutions + countHelper(col+1); //continue and see if it is solution
+        removeQueen(r, col); //backtracking. Remove that queen to check other solutions
       }
     }
     return solutions;
@@ -120,18 +125,5 @@ public class QueenBoard{
       display += "\n";
     }
     return display;
-  }
-
-  public static void main(String[] args) {
-    QueenBoard A = new QueenBoard(4);
-    QueenBoard B = new QueenBoard(5);
-    QueenBoard C = new QueenBoard(6);
-    QueenBoard D = new QueenBoard(7);
-    QueenBoard E = new QueenBoard(8);
-    System.out.println(A.countSolutions());
-    System.out.println(B.countSolutions());
-    System.out.println(C.countSolutions());
-    System.out.println(D.countSolutions());
-    System.out.println(E.countSolutions());
   }
 }
